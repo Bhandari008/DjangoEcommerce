@@ -1,0 +1,69 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block content %}
+    		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<!-- ASIDE -->
+					<div id="aside" class="col-md-3">
+						<!-- aside Widget -->
+						<div class="aside">
+                            <h3 class="aside-title">Price</h3>
+                            <form action="{% url 'shop:product_store' %}">
+                                <div class="price-filter">
+                                    <div id="price-slider"></div>
+                                    <div class="input-number price-min">
+                                        <input id="price_min" type="number" name="min_price">
+                                        <span class="qty-up">+</span>
+                                        <span class="qty-down">-</span>
+                                    </div>
+                                    <span>-</span>
+                                    <div class="input-number price-max">
+                                        <input id="price_max" type="number" name="max_price">
+                                        <span class="qty-up">+</span>
+                                        <span class="qty-down">-</span>
+                                    </div>
+                                </div>
+                                <div class="add-to-cart">
+                                        <button class="add-to-cart-btn" type="submit">Filter</button>         
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- product -->
+                         
+                        {% for p in products %}
+                            <div class="col-md-3 col-xs-6">
+                                
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="{{p.image.url}}" alt="{{p.name}}">
+                                    </div>
+                                    <div class="product-body">
+                                        <p class="product-category">{{p.category}}</p>
+                                        <h3 class="product-name"><a href="{{p.get_absolute_url}}">{{p.name}}</a></h3>
+                                        <h4 class="product-price">{{p.price}}</h4>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <form action="{% url 'cart:cart_add_list' p.id %}">
+                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                            
+                                        </form>
+                                    </div>
+                                </div> 
+                            </div>
+                        {% endfor %} 
+                        
+                    
+                    <!-- /product -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+{% endblock content %}

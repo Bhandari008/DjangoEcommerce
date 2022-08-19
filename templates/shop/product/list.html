@@ -1,0 +1,158 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}Products{% endblock title %}
+{% block content %}
+  <div class = "container">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<!-- shop -->
+					<div class="col-md-4 col-xs-6">
+						<div class="shop">
+							<div class="shop-img">
+								<img src="{% static 'img/shop01.png' %}" alt="">
+							</div>
+							<div class="shop-body">
+								<h3>Laptop<br>Collection</h3>
+								<a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+					</div>
+					<!-- /shop -->
+
+					<!-- shop -->
+					<div class="col-md-4 col-xs-6">
+						<div class="shop">
+							<div class="shop-img">
+								<img src="{% static 'img/shop03.png' %}" alt="">
+							</div>
+							<div class="shop-body">
+								<h3>Accessories<br>Collection</h3>
+								<a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+					</div>
+					<!-- /shop -->
+
+					<!-- shop -->
+					<div class="col-md-4 col-xs-6">
+						<div class="shop">
+							<div class="shop-img">
+								<img src="{% static 'img/shop02.png' %}" alt="">
+							</div>
+							<div class="shop-body">
+								<h3>Cameras<br>Collection</h3>
+								<a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+					</div>
+					<!-- /shop -->
+				</div>
+				<!-- /row -->
+			</div>
+  </div>
+  <div class = "container">
+    <div class = "row">
+      	<!-- section title -->
+					<div class="col-md-12">
+						<div class="section-title">
+							<h3 class="title">Our Products</h3>							
+						</div>
+					</div>
+				<!-- /section title -->
+        <!-- Products tab & slick -->
+        <div class = "col-md-12">
+          <div class = "row">
+            <div class = "products-tab">
+              <div id="tab1" class="tab-pane active">
+                <div class="products-slick" data-nav="#slick-nav-1">
+                  <!-- product -->               
+                    {% for product in products %}
+                    <div class = "product">
+                      <div class="product-img">
+                        <img src="{{product.image.url}}" alt="{{product.name}}">
+                      </div>
+							<div class="product-body">
+								<p class="product-category">{{product.category}}</p>
+									<h3 class="product-name"><a href="{{product.get_absolute_url}}">{{product.name}}</a></h3>
+									<h4 class="product-price">NRs {{product.price}}</h4>
+							</div>
+							<div class="add-to-cart">
+								<form action="{% url 'cart:cart_add_list' product.id %}">
+									<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+								</form>
+							</div>                     
+                    </div>
+                    {% endfor %}                         
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+  {% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% endblock %}
+
+{% block content %}
+  <div id="sidebar">
+    <h3>Categories</h3>
+    <ul>
+      <li {% if not category %}class="selected"{% endif %}>
+        <a href="{% url "shop:product_list" %}">All</a>
+      </li>
+      {% for c in categories %}
+        <li {% if category.slug == c.slug %} class="selected"{% endif %}>
+          <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div id="main" class="product-list">
+    <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
+    {% for product in products %}
+      <div class="item">
+        <a href="{{ product.get_absolute_url }}">
+          <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+        </a>
+        <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+        <br>
+        NRs {{ product.price }}
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %} {% endcomment %}

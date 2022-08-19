@@ -1,0 +1,145 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}{{product.name}}{% endblock title %}
+{% block content %}
+  <div class = "container">
+    <div class = "row">
+      <!-- Product main img -->
+					<div class="col-md-5 col-md-push-2">
+						<div id="product-main-img">
+							<div class="product-preview">
+								<img src="{{product.image.url}}" alt="{{product.name}}">
+							</div>
+
+							<div class="product-preview">
+								<img src="{{product.image.url}}" alt="{{product.name}}">
+							</div>
+						</div>
+					</div>
+					<!-- /Product main img -->
+          					<!-- Product thumb imgs -->
+					<div class="col-md-2  col-md-pull-5">
+						<div id="product-imgs">
+							<div class="product-preview">
+								<img src="{{product.image.url}}" alt="{{product.name}}">
+							</div>
+
+							<div class="product-preview">
+								<img src="{{product.image.url}}" alt="{{product.name}}">
+							</div>
+						</div>
+					</div>
+					<!-- /Product thumb imgs -->
+          					<!-- Product details -->
+					<div class="col-md-5">
+						<div class="product-details">
+							<h2 class="product-name">{{product.name}}</h2>
+							<div>
+								<h3 class="product-price">NRs {{product.price}}</h3>
+								<span class="product-available">{% if product.available %}In Stock{% endif %}</span>
+							</div>
+							<p>
+                {{product.description}}
+              </p>
+               
+							<div class="add-to-cart">
+								<div class="qty-label">
+									
+								</div>
+                <form action="{% url 'cart:cart_add' product.id %}" type="submit" method="post">
+                  {{cart_product_form}}
+								  <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                  {% csrf_token %}
+                </form>
+							</div>
+
+
+							<ul class="product-links">
+								<li>Category:</li>
+								<li><a href="#">{{product.category}}</a></li>
+								
+							</ul>
+							<ul class="product-links">
+								<li>Share:</li>
+								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+								<li><a href="#"><i class="fa fa-envelope"></i></a></li>
+							</ul>
+
+						</div>
+					</div>
+    </div>
+  </div>
+  {% if recommended_products %}
+    <div class="container">
+      <!-- row -->
+      <div class="row">
+
+        <div class="col-md-12">
+          <div class="section-title text-center">
+            <h3 class="title">People also bought this</h3>
+          </div>
+        </div>
+        <!-- product -->
+        
+          {% for p in recommended_products  %}
+          <div class="col-md-3 col-xs-6">
+            <div class="product">
+              <div class="product-img">
+                <img src="{{p.image.url}}" alt="{{p.name}}" width="100px" height="100px">
+              </div>
+              <div class="product-body">
+                <p class="product-category">{{p.category}}</p>
+                <h3 class="product-name"><a href="#">{{p.name}}</a></h3>
+                <h4 class="product-price">NRs {{p.price}}</h4>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        <!-- /product -->
+        {% endif %}
+            
+      </div>
+    </div>
+{% endblock content %}
+
+{% comment %} {% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ product.name }}
+{% endblock %}
+
+{% block content %}
+  <div class="product-detail">
+    <img src="{% if product.image %}{{ product.image.url }}{% else %}
+    {% static "img/no_image.png" %}{% endif %}">
+    <h1>{{ product.name }}</h1>
+    <h2>
+      <a href="{{ product.category.get_absolute_url }}">
+        {{ product.category }}
+      </a>
+    </h2>
+    <p class="price">NRs {{ product.price }}</p>
+    <form action="{% url 'cart:cart_add' product.id %}" method="post">
+      {{ cart_product_form }}
+      {% csrf_token %}
+      <input type="submit" value="Add to cart">
+    </form> 
+    {{ product.description|linebreaks }}
+    {% if recommended_products %}
+      <div class="recommendations">
+        <h3 People who bought this also bought></h3>
+        {% for p  in recommended_products  %}
+        <div class="item">
+          <a href = "{{p.get_absolute_url}}">
+            <img src = "{% if p.image %}{{p.image.url}}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+          </a>
+          <p><a href="{{p.get_absolute_url}}">{{p.name}}</a></p>
+        </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %} {% endcomment %}

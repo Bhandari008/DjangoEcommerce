@@ -1,0 +1,14 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}Log In{% endblock title %}
+{% block content %}
+
+<div class = "container">
+    <h1>Login</h1>
+    <form method = "post" action ="{% url 'account_login' %}">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class = "btn btn-danger" type="submit">Log In</button>
+    </form>
+</div>
+{% endblock content %}

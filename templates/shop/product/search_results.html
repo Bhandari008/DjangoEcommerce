@@ -1,0 +1,9 @@
+{% extends 'shop/base.html' %}
+{% block title %}Search{% endblock title %}
+
+{% block content %}
+    {% for p in result %}
+        <img src = {{p.image.url}} width="100px" height="100px/>
+        <p> {{p.name}} </p>
+    {% endfor %}
+{% endblock content %}
